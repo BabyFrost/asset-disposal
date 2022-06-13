@@ -9,6 +9,9 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.uba.assetdisposal.model.Product;
+import com.uba.assetdisposal.tools.DateStringConverter;
+
 public class ProductDTO {
 	
     private Long id;
@@ -43,6 +46,23 @@ public class ProductDTO {
     @NotNull
     private byte[] data;
     
+    public ProductDTO() { }
+    
+	public ProductDTO(Product product) {
+		this.id = product.getId();
+		this.name = product.getName();
+		this.maxDays = product.getMaxDays();
+		this.bidStart = DateStringConverter.localDateToString( product.getBidStart() );
+		this.bidEnd = DateStringConverter.localDateToString( product.getBidEnd() );
+		this.solid = product.getSolid();
+		this.description = product.getDescription();
+		this.quantity = product.getQuantity();
+		this.price = product.getPrice();
+		this.currentAmount = product.getCurrentAmount();
+		this.startAmount = product.getStartAmount();
+		this.data = product.getData();
+	}
+	
 	public Long getId() {
 		return id;
 	}

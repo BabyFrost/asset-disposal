@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,17 +28,12 @@ public class ProductController {
 	
 	
 	@PostMapping 							  
-	public String postReport( HttpServletResponse response, @Valid ProductDTO productDTO, Errors errors ) throws IOException, ParseException {	
-		System.out.println("Got the Product");
-		System.out.println( "Name : "+productDTO.getName() );
-		System.out.println( "ProductDTO Bid Start : "+productDTO.getBidStart() );
-		System.out.println( "ProductDTO Data : "+productDTO.getData() );
+	public ResponseEntity<ProductDTO> postReport( HttpServletResponse response, @Valid ProductDTO productDTO, Errors errors ) throws IOException, ParseException {
 		
 		Product product = new Product ();
 		product.setName( productDTO.getName() );
 		product.setMaxDays( productDTO.getMaxDays() );
 		product.setBidStart( DateStringConverter.stringToLocalDate( productDTO.getBidStart() ) );
-		System.out.println( "Product Bid Start : "+product.getBidStart() );
 		product.setBidEnd( DateStringConverter.stringToLocalDate( productDTO.getBidEnd() ) );
 		product.setSolid( productDTO.getSolid() );
 		product.setDescription( productDTO.getDescription() );
@@ -46,12 +43,7 @@ public class ProductController {
 		product.setStartAmount( productDTO.getStartAmount() );
 		product.setData( productDTO.getData() );
 		
-		productRepository.save(product);
-		
-		System.out.println( productRepository.findById( product.getId() ).get().getData() );
-		System.out.println( productRepository.findById( product.getId() ).get().getData().toString() );
-		
-		return null;
+		return new ResponseEntity<>( new ProductDTO( productRepository.save(product) ), HttpStatus.OK);
 	}
 
 }

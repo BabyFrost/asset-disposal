@@ -21,5 +21,9 @@ public class DateStringConverter {
 	public static String dateToString(Date date) {
 		return simpleDateFormat.format(new Date());
 	}
+	
+	public static String localDateToString( LocalDate date) {
+		return date.format( formatter );
+	}
 
 }
