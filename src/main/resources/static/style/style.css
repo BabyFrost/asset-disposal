@@ -1,0 +1,17 @@
+div.bg-red {
+    background-color: red;
+}
+
+.vertical-scrollbar {
+	position: relative;
+	height: 450px;
+	overflow-y: scroll;
+}
+
+.table-wrapper-scroll-y {
+	display: block;
+}
+
+.custom-rounded {
+	border-radius: 20px;
+}
